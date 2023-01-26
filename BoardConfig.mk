@@ -69,5 +69,8 @@ BOARD_AVB_ALGORITHM := SHA256_RSA2048
 # created by: openssl pkcs8 -in releasekey.pk8 -inform DER -out releasekey.key -nocrypt
 BOARD_AVB_KEY_PATH := user-keys/releasekey.key
 
+
+BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/mkbootimg.mk
+
 # Include the proprietary files BoardConfig.
 -include vendor/oneplus/hotdog/BoardConfigVendor.mk
