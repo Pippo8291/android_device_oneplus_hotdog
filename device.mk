@@ -44,6 +44,22 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # Shipping API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
+# Crypto (forces FBE v2 regardless of PRODUCT_SHIPPING_API_LEVEL)
+# ensure you remove CONFIG_DM_CRYPT=y from your kernel config or set ro.crypto.allow_encrypt_override=true
+# https://source.android.com/docs/security/features/encryption/file-based
+# https://source.android.com/docs/security/features/encryption/metadata
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.crypto.volume.filenames_mode=aes-256-cts \
+	ro.crypto.volume.metadata.method=dm-default-key \
+	ro.crypto.dm_default_key.options_format.version=2
+
+# adoptable storage:
+# https://source.android.com/docs/security/features/encryption/file-based#enabling-fbe-on-adoptable-storage
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.crypto.volume.options=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized \
+	ro.crypto.volume.contents_mode=aes-256-xts \
+	ro.crypto.volume.filenames_mode=aes-256-cts
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
